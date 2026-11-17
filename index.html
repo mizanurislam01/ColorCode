@@ -1,210 +1,1092 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ColorCode</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-    crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <title>ColorCode — Tech, Coding &amp; Education Blog</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans, Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Plus Jakarta Sans', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            void: '#0B0F19',
+            surface: '#111827',
+            elevated: '#1E293B',
+            syntaxCyan: '#06B6D4',
+            syntaxEmerald: '#10B981',
+            syntaxViolet: '#8B5CF6',
+            syntaxAmber: '#F59E0B',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Subtle architectural dot grid for developer aesthetic */
+    .bg-code-grid {
+      background-image: radial-gradient(rgba(148, 163, 184, 0.12) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0B0F19;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1E293B;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #06B6D4;
+    }
+
+    /* Smooth dropdown transition */
+    .dropdown-panel {
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(8px);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .dropdown-group:hover .dropdown-panel,
+    .dropdown-group:focus-within .dropdown-panel,
+    .dropdown-panel.open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+  </style>
 </head>
 
-<body>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">ColorCode</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="https://mizanuralrasid.github.io/Mizanuralrasid/">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-              aria-expanded="false">
-              Services
+<body class="bg-void text-slate-50 font-sans antialiased selection:bg-syntaxCyan selection:text-void overflow-x-hidden">
+
+  <!-- ==================== STICKY GLASSMORPHIC NAVIGATION BAR ==================== -->
+  <header class="sticky top-0 z-50 bg-void/85 backdrop-blur-xl border-b border-slate-800/80">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4" aria-label="Primary Navigation">
+      
+      <!-- Brand Logo -->
+      <a href="#top" class="flex items-center gap-3 group shrink-0 focus:outline-none">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-syntaxCyan via-sky-500 to-syntaxViolet p-[1px] shadow-lg shadow-syntaxCyan/20 group-hover:scale-105 transition-transform">
+          <div class="w-full h-full bg-void rounded-[11px] flex items-center justify-center font-mono font-bold text-sm text-syntaxCyan">
+            &lt;/&gt;
+          </div>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-display font-extrabold text-xl tracking-tight text-white">
+            Color<span class="text-syntaxCyan">Code</span>
+          </span>
+          <span class="font-mono text-[10px] uppercase tracking-widest text-slate-400 -mt-0.5">Tech &amp; Dev Blog</span>
+        </div>
+      </a>
+
+      <!-- Desktop Links -->
+      <ul class="hidden lg:flex items-center gap-7 text-sm font-medium text-slate-300">
+        <li>
+          <a href="https://mizanuralrasid.github.io/Mizanuralrasid/" target="_blank" rel="noopener noreferrer" class="hover:text-syntaxCyan transition-colors py-2 flex items-center gap-1.5">
+            <span>Home</span>
+            <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="#about" class="hover:text-syntaxCyan transition-colors py-2">About</a>
+        </li>
+        
+        <!-- Services Dropdown -->
+        <li class="relative dropdown-group">
+          <button type="button" id="servicesDropdownBtn" aria-expanded="false" class="hover:text-syntaxCyan transition-colors py-2 inline-flex items-center gap-1.5 focus:outline-none">
+            <span>Services</span>
+            <svg class="w-4 h-4 text-slate-400 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div id="servicesDropdownMenu" class="dropdown-panel absolute left-0 mt-2 w-72 rounded-2xl bg-surface border border-slate-800 shadow-2xl p-2 z-50">
+            <a href="#services" onclick="selectServiceTopic('Web Design')" class="flex items-start gap-3 p-3 rounded-xl hover:bg-elevated/80 transition group">
+              <span class="w-8 h-8 rounded-lg bg-syntaxCyan/15 text-syntaxCyan flex items-center justify-center font-mono text-xs font-bold shrink-0 mt-0.5">UI</span>
+              <div>
+                <div class="text-sm font-semibold text-white group-hover:text-syntaxCyan transition">Web Design</div>
+                <div class="text-xs text-slate-400">Modern HTML5, CSS &amp; responsive layouts</div>
+              </div>
             </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Web Design</a></li>
-              <li><a class="dropdown-item" href="#">Blogging</a></li>
-              <li>
-                <hr class="dropdown-divider">
-              </li>
-              <li><a class="dropdown-item" href="#">Database management system</a></li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="https://techassam2021.blogspot.com/">Contact</a>
-          </li>
-        </ul>
-        <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
+            <a href="#services" onclick="selectServiceTopic('Blogging')" class="flex items-start gap-3 p-3 rounded-xl hover:bg-elevated/80 transition group">
+              <span class="w-8 h-8 rounded-lg bg-syntaxEmerald/15 text-syntaxEmerald flex items-center justify-center font-mono text-xs font-bold shrink-0 mt-0.5">&lt;/&gt;</span>
+              <div>
+                <div class="text-sm font-semibold text-white group-hover:text-syntaxEmerald transition">Blogging</div>
+                <div class="text-xs text-slate-400">Coding tutorials, tech &amp; education news</div>
+              </div>
+            </a>
+            <div class="my-1.5 border-t border-slate-800"></div>
+            <a href="#services" onclick="selectServiceTopic('DBMS')" class="flex items-start gap-3 p-3 rounded-xl hover:bg-elevated/80 transition group">
+              <span class="w-8 h-8 rounded-lg bg-syntaxViolet/15 text-syntaxViolet flex items-center justify-center font-mono text-xs font-bold shrink-0 mt-0.5">SQL</span>
+              <div>
+                <div class="text-sm font-semibold text-white group-hover:text-syntaxViolet transition">Database Management System</div>
+                <div class="text-xs text-slate-400">Relational schemas, queries &amp; optimization</div>
+              </div>
+            </a>
+          </div>
+        </li>
+
+        <li>
+          <a href="https://techassam2021.blogspot.com/" target="_blank" rel="noopener noreferrer" class="hover:text-syntaxCyan transition-colors py-2 flex items-center gap-1.5">
+            <span>Contact</span>
+            <span class="font-mono text-[10px] px-1.5 py-0.5 rounded bg-elevated text-syntaxAmber border border-slate-700">TechAssam</span>
+          </a>
+        </li>
+      </ul>
+
+      <!-- Desktop Live Search Form -->
+      <div class="hidden md:flex items-center gap-2">
+        <form id="desktopSearchForm" class="relative flex items-center" role="search">
+          <svg class="w-4 h-4 text-slate-400 absolute left-3.5 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z" />
+          </svg>
+          <input 
+            type="search" 
+            id="desktopSearchInput" 
+            placeholder="Search C++, CSS, DBMS..." 
+            aria-label="Search blogs"
+            class="w-56 xl:w-64 bg-surface text-slate-100 placeholder-slate-400 text-sm rounded-xl pl-10 pr-4 py-2.5 border border-slate-800 focus:border-syntaxCyan focus:ring-2 focus:ring-syntaxCyan/25 outline-none transition-all"
+          >
+          <button type="submit" class="ml-2 px-4 py-2.5 rounded-xl bg-syntaxEmerald/15 hover:bg-syntaxEmerald text-syntaxEmerald hover:text-void font-mono text-xs font-semibold border border-syntaxEmerald/30 transition-all">
+            Search
+          </button>
         </form>
       </div>
-    </div>
-  </nav>
-  <div class="container-fluid card py-5">
-    <div id="bg-image">
-      <div class="container row" style="width: 50%;">
-        <h1 class="card-title">Welcome to <b>ColorCode</b></h1>
-        <p class="card-text my-5">In This Blogging Website You Will Know About The Trending Technology,
-          Information,Education related blogs, coding blogs like
-          <strong><code>c, c++, HTML, CSS, bootstrap</code></strong> and many more etc.
 
-          If you have any query regrading The Trending Technology and Information, Education related News and any other
-          issue, please feel free to contact Us
-        </p>
-      </div>
-      <button class="mx-5 btn btn-primary">View blogs</button>
-    </div>
-  </div>
-  <div class="col">
-    <h3 class="recent text-center my-5">Recent blogs</h3>
-    <div class="container-fluid row" id="recent-post-container">
+      <!-- Mobile Hamburger Button -->
+      <button type="button" id="mobileMenuBtn" aria-label="Toggle Menu" aria-expanded="false" class="lg:hidden p-2.5 rounded-xl bg-surface border border-slate-800 text-slate-200 hover:text-syntaxCyan transition">
+        <svg id="menuIconOpen" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+        <svg id="menuIconClose" class="w-6 h-6 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </nav>
 
-      <div class="card m-2" style="width: 18rem;">
-        <img src="images.jpg" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-            content.</p>
-          <a href="#" class="btn btn-primary">Read more</a>
-        </div>
-      </div>
-      <div class="card m-2" style="width: 18rem;">
-        <img src="images.jpg" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-            content.</p>
-          <a href="#" class="btn btn-primary">Read more</a>
-        </div>
-      </div>
-      <div class="card m-2" style="width: 18rem;">
-        <img src="images.jpg" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-            content.</p>
-          <a href="#" class="btn btn-primary">Read more</a>
-        </div>
-      </div>
-      <div class="card m-2" style="width: 18rem;">
-        <img src="images.jpg" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-            content.</p>
-          <a href="#" class="btn btn-primary">Read more</a>
-        </div>
-      </div>
-
-    </div>
-  </div>
-  <!-- --------------pagignation--------------------------------- -->
-  <div class="container-fluid" id="pagination">
-
-    <ul class="pagination float-end mx-5">
-      <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-      <li class="page-item"><a class="page-link" href="#">1</a></li>
-      <li class="page-item"><a class="page-link" href="#">2</a></li>
-      <li class="page-item"><a class="page-link" href="#">3</a></li>
-      <li class="page-item"><a class="page-link" href="#">Next</a></li>
-    </ul>
-  </div>
-  <!-- ---------------------------------contact------------------------------------- -->
-  <div id="form" class="col container-fluid">
-
-    <div class="container card bg-transparent" id="get-in-touch">
-      <h2 class="text-center">Get in touch</h2>
-      <hr>
-      <form class="bg-transparent">
-        <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label">Name</label>
-          <input type="text" class="form-control bg-transparent" id="name" aria-describedby="nameHelp">
-        </div>
-        <div class="mb-3">
-          <label for="phone" class="form-label ">Phone</label>
-          <input type="number" class="form-control bg-transparent" id="phone">
-        </div>
-        <div class="mb-3">
-          <label for="message" class="form-label">Message</label>
-          <textarea class="form-control bg-transparent" name="message" id="message"></textarea>
-        </div>
-        <a href=""><button type="submit" class="btn btn-primary">Submit</button></a>
+    <!-- Mobile Collapsible Menu -->
+    <div id="mobileMenuDrawer" class="hidden lg:hidden bg-surface border-b border-slate-800 px-4 pt-3 pb-6 space-y-4">
+      <form id="mobileSearchForm" class="flex gap-2">
+        <input 
+          type="search" 
+          id="mobileSearchInput" 
+          placeholder="Search blogs (C, C++, HTML, CSS)..." 
+          class="flex-1 bg-void text-slate-100 placeholder-slate-400 text-sm rounded-xl px-4 py-2.5 border border-slate-800 focus:border-syntaxCyan outline-none"
+        >
+        <button type="submit" class="px-4 py-2.5 rounded-xl bg-syntaxCyan text-void font-semibold text-sm">
+          Go
+        </button>
       </form>
+
+      <ul class="space-y-1.5 text-sm font-medium text-slate-200">
+        <li><a href="https://mizanuralrasid.github.io/Mizanuralrasid/" target="_blank" rel="noopener noreferrer" class="mobile-link block px-3 py-2.5 rounded-xl hover:bg-elevated">Home (Portfolio)</a></li>
+        <li><a href="#about" class="mobile-link block px-3 py-2.5 rounded-xl hover:bg-elevated">About ColorCode</a></li>
+        <li class="px-3 py-2 text-xs font-mono uppercase tracking-wider text-slate-400">Services</li>
+        <li><a href="#services" class="mobile-link block pl-6 pr-3 py-2 rounded-xl hover:bg-elevated text-syntaxCyan">• Web Design</a></li>
+        <li><a href="#services" class="mobile-link block pl-6 pr-3 py-2 rounded-xl hover:bg-elevated text-syntaxEmerald">• Blogging</a></li>
+        <li><a href="#services" class="mobile-link block pl-6 pr-3 py-2 rounded-xl hover:bg-elevated text-syntaxViolet">• Database Management System</a></li>
+        <li><a href="https://techassam2021.blogspot.com/" target="_blank" rel="noopener noreferrer" class="mobile-link block px-3 py-2.5 rounded-xl hover:bg-elevated text-syntaxAmber">Contact (TechAssam Blog)</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- ==================== HERO SECTION (ASYMMETRIC SPLIT) ==================== -->
+    <section id="about" class="relative py-16 sm:py-24 lg:py-28 bg-void bg-code-grid overflow-hidden border-b border-slate-800/80">
+      <!-- Ambient Syntax Glows -->
+      <div class="absolute -top-24 -left-24 w-96 h-96 bg-syntaxCyan/15 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute bottom-0 right-0 w-[28rem] h-[28rem] bg-syntaxViolet/15 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-12 gap-12 lg:gap-10 items-center">
+          
+          <!-- Left Column: Editorial Intro -->
+          <div class="lg:col-span-7 space-y-6">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surface border border-slate-800 shadow-inner">
+              <span class="w-2 h-2 rounded-full bg-syntaxCyan animate-pulse"></span>
+              <span class="font-mono text-xs font-semibold tracking-wider uppercase text-syntaxCyan">
+                Tech &bull; Coding &bull; Education
+              </span>
+            </div>
+
+            <h1 class="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight text-white leading-[1.12]">
+              Welcome to <span class="text-transparent bg-clip-text bg-gradient-to-r from-syntaxCyan via-sky-400 to-syntaxViolet">ColorCode</span>
+            </h1>
+
+            <p class="text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl">
+              In this blogging website you will know about the <span class="text-white font-medium">Trending Technology</span>, <span class="text-white font-medium">Information</span>, and <span class="text-white font-medium">Education related blogs</span>, alongside hands-on coding tutorials covering
+              <code class="font-mono text-xs sm:text-sm px-2 py-0.5 rounded bg-elevated text-syntaxCyan border border-slate-700/80">C</code>,
+              <code class="font-mono text-xs sm:text-sm px-2 py-0.5 rounded bg-elevated text-syntaxEmerald border border-slate-700/80">C++</code>,
+              <code class="font-mono text-xs sm:text-sm px-2 py-0.5 rounded bg-elevated text-syntaxAmber border border-slate-700/80">HTML</code>,
+              <code class="font-mono text-xs sm:text-sm px-2 py-0.5 rounded bg-elevated text-syntaxViolet border border-slate-700/80">CSS</code>, and
+              <code class="font-mono text-xs sm:text-sm px-2 py-0.5 rounded bg-elevated text-sky-400 border border-slate-700/80">Bootstrap</code>
+              and many more.
+            </p>
+
+            <p class="text-sm sm:text-base text-slate-400 leading-relaxed max-w-2xl">
+              If you have any query regarding trending technology, information, education-related news, or any other issue, please feel free to contact us.
+            </p>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-wrap items-center gap-4 pt-2">
+              <a href="#blogs" class="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl bg-syntaxCyan hover:bg-cyan-400 text-void font-bold text-sm sm:text-base shadow-lg shadow-syntaxCyan/25 hover:-translate-y-0.5 transition-all">
+                <span>View Blogs</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+              </a>
+
+              <a href="#contact" class="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-surface hover:bg-elevated text-slate-100 font-semibold text-sm sm:text-base border border-slate-700/90 transition-all">
+                <span>Get in Touch</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Right Column: Interactive Syntax-Highlighted IDE Preview -->
+          <div class="lg:col-span-5">
+            <div class="rounded-2xl bg-surface border border-slate-800 shadow-2xl overflow-hidden">
+              <!-- IDE Window Top Bar -->
+              <div class="flex items-center justify-between px-4 py-3 bg-elevated/70 border-b border-slate-800">
+                <div class="flex items-center gap-2">
+                  <span class="w-3 h-3 rounded-full bg-rose-500"></span>
+                  <span class="w-3 h-3 rounded-full bg-amber-400"></span>
+                  <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+                </div>
+                <!-- Language Tabs -->
+                <div class="flex items-center gap-1 font-mono text-xs" role="tablist">
+                  <button type="button" onclick="switchCodeTab('cpp')" id="tab-cpp" class="code-tab px-2.5 py-1 rounded-md bg-void text-syntaxCyan border border-slate-700 font-semibold transition">main.cpp</button>
+                  <button type="button" onclick="switchCodeTab('web')" id="tab-web" class="code-tab px-2.5 py-1 rounded-md text-slate-400 hover:text-white transition">index.html</button>
+                  <button type="button" onclick="switchCodeTab('sql')" id="tab-sql" class="code-tab px-2.5 py-1 rounded-md text-slate-400 hover:text-white transition">schema.sql</button>
+                </div>
+              </div>
+
+              <!-- Code Display Body -->
+              <div class="p-5 sm:p-6 font-mono text-xs sm:text-[13px] leading-relaxed overflow-x-auto bg-void/90 min-h-[260px] flex flex-col justify-between">
+                <pre id="ideCodeContent" class="text-slate-300"><code><span class="text-syntaxViolet">#include</span> <span class="text-syntaxEmerald">&lt;iostream&gt;</span>
+<span class="text-syntaxViolet">using namespace</span> std;
+
+<span class="text-slate-500">// ColorCode Daily Knowledge Engine</span>
+<span class="text-syntaxCyan">int</span> <span class="text-amber-300">main</span>() {
+    string topics[] = {<span class="text-syntaxEmerald">"C/C++"</span>, <span class="text-syntaxEmerald">"HTML/CSS"</span>, <span class="text-syntaxEmerald">"DBMS"</span>};
+    <span class="text-syntaxViolet">for</span> (<span class="text-syntaxCyan">const auto</span>&amp; topic : topics) {
+        cout &lt;&lt; <span class="text-syntaxEmerald">"Learning: "</span> &lt;&lt; topic &lt;&lt; endl;
+    }
+    <span class="text-syntaxViolet">return</span> <span class="text-syntaxAmber">0</span>;
+}</code></pre>
+
+                <div class="mt-5 pt-3 border-t border-slate-800/90 flex items-center justify-between text-[11px] text-slate-400">
+                  <span id="ideStatusLabel" class="flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-syntaxEmerald"></span>
+                    GCC 14.2 &bull; Ready
+                  </span>
+                  <button type="button" onclick="copyCurrentSnippet()" id="copySnippetBtn" class="text-syntaxCyan hover:underline font-semibold">
+                    Copy snippet
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SERVICES & CORE TOPICS STRIP ==================== -->
+    <section id="services" class="py-20 bg-surface/50 border-b border-slate-800/80">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+          <div>
+            <span class="font-mono text-xs uppercase tracking-widest text-syntaxEmerald font-semibold">// Core Pillars</span>
+            <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-white mt-1">Services &amp; Technical Focus</h2>
+          </div>
+          <p class="text-sm text-slate-400 max-w-md">
+            Explore our specialized tutorials and digital services across modern web engineering, tech publishing, and database architecture.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Card 1: Web Design -->
+          <div class="group rounded-2xl bg-surface border border-slate-800 hover:border-syntaxCyan/60 p-7 transition-all duration-300 hover:-translate-y-1">
+            <div class="w-12 h-12 rounded-xl bg-syntaxCyan/10 border border-syntaxCyan/25 text-syntaxCyan flex items-center justify-center mb-5 group-hover:bg-syntaxCyan group-hover:text-void transition-colors">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            </div>
+            <h3 class="font-display font-bold text-xl text-white mb-2">Web Design</h3>
+            <p class="text-sm text-slate-400 leading-relaxed mb-5">
+              Clean, responsive, and accessible front-end interfaces built with semantic HTML5, modern CSS Grid/Flexbox, and Bootstrap frameworks.
+            </p>
+            <button type="button" onclick="filterByCategory('Web Dev', true)" class="font-mono text-xs font-semibold text-syntaxCyan hover:underline inline-flex items-center gap-1">
+              <span>Browse Web Dev posts</span>
+              <span>&rarr;</span>
+            </button>
+          </div>
+
+          <!-- Card 2: Blogging -->
+          <div class="group rounded-2xl bg-surface border border-slate-800 hover:border-syntaxEmerald/60 p-7 transition-all duration-300 hover:-translate-y-1">
+            <div class="w-12 h-12 rounded-xl bg-syntaxEmerald/10 border border-syntaxEmerald/25 text-syntaxEmerald flex items-center justify-center mb-5 group-hover:bg-syntaxEmerald group-hover:text-void transition-colors">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+            </div>
+            <h3 class="font-display font-bold text-xl text-white mb-2">Blogging &amp; Tech News</h3>
+            <p class="text-sm text-slate-400 leading-relaxed mb-5">
+              In-depth articles on C, C++, trending technology updates, student education resources, and step-by-step programming guides.
+            </p>
+            <button type="button" onclick="filterByCategory('C / C++', true)" class="font-mono text-xs font-semibold text-syntaxEmerald hover:underline inline-flex items-center gap-1">
+              <span>Explore Coding &amp; News</span>
+              <span>&rarr;</span>
+            </button>
+          </div>
+
+          <!-- Card 3: Database Management System -->
+          <div class="group rounded-2xl bg-surface border border-slate-800 hover:border-syntaxViolet/60 p-7 transition-all duration-300 hover:-translate-y-1">
+            <div class="w-12 h-12 rounded-xl bg-syntaxViolet/10 border border-syntaxViolet/25 text-syntaxViolet flex items-center justify-center mb-5 group-hover:bg-syntaxViolet group-hover:text-white transition-colors">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/></svg>
+            </div>
+            <h3 class="font-display font-bold text-xl text-white mb-2">Database Management System</h3>
+            <p class="text-sm text-slate-400 leading-relaxed mb-5">
+              Relational database modeling, ER diagrams, SQL normalization, indexing strategies, and backend data integrity tutorials.
+            </p>
+            <button type="button" onclick="filterByCategory('DBMS', true)" class="font-mono text-xs font-semibold text-syntaxViolet hover:underline inline-flex items-center gap-1">
+              <span>Explore DBMS guides</span>
+              <span>&rarr;</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== RECENT BLOGS SECTION WITH FILTERING & PAGINATION ==================== -->
+    <section id="blogs" class="py-24 bg-void">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Section Header & Category Pills -->
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-12">
+          <div>
+            <span class="font-mono text-xs uppercase tracking-widest text-syntaxCyan font-semibold">// Knowledge Archive</span>
+            <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-white mt-1">Recent Blogs</h2>
+          </div>
+
+          <!-- Category Filter Pills -->
+          <div class="flex flex-wrap items-center gap-2" id="categoryPills">
+            <button type="button" data-cat="All" onclick="filterByCategory('All')" class="cat-pill px-4 py-2 rounded-xl font-mono text-xs font-semibold bg-syntaxCyan text-void transition">All</button>
+            <button type="button" data-cat="C / C++" onclick="filterByCategory('C / C++')" class="cat-pill px-4 py-2 rounded-xl font-mono text-xs font-semibold bg-surface text-slate-300 border border-slate-800 hover:border-slate-700 transition">C / C++</button>
+            <button type="button" data-cat="Web Dev" onclick="filterByCategory('Web Dev')" class="cat-pill px-4 py-2 rounded-xl font-mono text-xs font-semibold bg-surface text-slate-300 border border-slate-800 hover:border-slate-700 transition">Web Dev</button>
+            <button type="button" data-cat="DBMS" onclick="filterByCategory('DBMS')" class="cat-pill px-4 py-2 rounded-xl font-mono text-xs font-semibold bg-surface text-slate-300 border border-slate-800 hover:border-slate-700 transition">DBMS</button>
+            <button type="button" data-cat="Tech News" onclick="filterByCategory('Tech News')" class="cat-pill px-4 py-2 rounded-xl font-mono text-xs font-semibold bg-surface text-slate-300 border border-slate-800 hover:border-slate-700 transition">Tech &amp; Education</button>
+          </div>
+        </div>
+
+        <!-- Active Filter Banner -->
+        <div id="activeFilterNotice" class="hidden mb-8 px-4 py-3 rounded-xl bg-surface border border-slate-800 flex items-center justify-between text-sm">
+          <span class="text-slate-300">Showing <strong id="resultCount" class="text-syntaxCyan">0</strong> matching articles</span>
+          <button type="button" onclick="resetFilters()" class="font-mono text-xs text-syntaxAmber hover:underline">Clear filters</button>
+        </div>
+
+        <!-- Blog Cards Grid -->
+        <div id="blogCardsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+          <!-- Cards dynamically rendered by JS for clean search + pagination -->
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyBlogState" class="hidden text-center py-16 px-4 rounded-2xl bg-surface border border-slate-800">
+          <p class="font-display font-bold text-xl text-white">No articles matched your search</p>
+          <p class="text-slate-400 text-sm mt-2">Try searching for "C++", "HTML", "CSS", "Bootstrap", or "Database".</p>
+          <button type="button" onclick="resetFilters()" class="mt-5 px-5 py-2.5 rounded-xl bg-syntaxCyan text-void font-semibold text-sm">
+            Reset Search &amp; Filters
+          </button>
+        </div>
+
+        <!-- Functional Pagination Controls -->
+        <nav aria-label="Blog Pagination" class="mt-14 flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 border-t border-slate-800/80">
+          <p class="text-xs font-mono text-slate-400" id="paginationInfo">Page 1 of 2</p>
+          
+          <ul class="inline-flex items-center gap-2" id="paginationControls">
+            <!-- Populated via JS -->
+          </ul>
+        </nav>
+
+      </div>
+    </section>
+
+    <!-- ==================== GET IN TOUCH SECTION ==================== -->
+    <section id="contact" class="py-24 bg-surface/60 border-t border-slate-800/80 relative overflow-hidden">
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[36rem] h-[36rem] bg-syntaxCyan/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="rounded-3xl bg-surface border border-slate-800 shadow-2xl overflow-hidden grid lg:grid-cols-12">
+          
+          <!-- Left Info Panel -->
+          <div class="lg:col-span-5 bg-gradient-to-br from-elevated via-surface to-void p-8 sm:p-10 border-b lg:border-b-0 lg:border-r border-slate-800 flex flex-col justify-between space-y-8">
+            <div class="space-y-4">
+              <span class="font-mono text-xs uppercase tracking-widest text-syntaxCyan font-semibold">// Connect With Us</span>
+              <h2 class="font-display font-extrabold text-3xl text-white">Get in touch</h2>
+              <p class="text-sm sm:text-base text-slate-300 leading-relaxed">
+                Have a question about C/C++, Web Design, DBMS, or trending educational news? Drop a message and we will get back to you promptly.
+              </p>
+            </div>
+
+            <div class="space-y-4 text-sm">
+              <a href="https://mizanuralrasid.github.io/Mizanuralrasid/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3.5 p-3.5 rounded-xl bg-void/80 border border-slate-800 hover:border-syntaxCyan/50 transition">
+                <span class="w-9 h-9 rounded-lg bg-syntaxCyan/15 text-syntaxCyan flex items-center justify-center font-mono font-bold text-xs">DEV</span>
+                <div>
+                  <div class="font-semibold text-white">Mizanur Alrasid</div>
+                  <div class="text-xs text-slate-400">Author &amp; Developer Portfolio</div>
+                </div>
+              </a>
+
+              <a href="https://techassam2021.blogspot.com/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3.5 p-3.5 rounded-xl bg-void/80 border border-slate-800 hover:border-syntaxEmerald/50 transition">
+                <span class="w-9 h-9 rounded-lg bg-syntaxEmerald/15 text-syntaxEmerald flex items-center justify-center font-mono font-bold text-xs">TA</span>
+                <div>
+                  <div class="font-semibold text-white">TechAssam Blog</div>
+                  <div class="text-xs text-slate-400">techassam2021.blogspot.com</div>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <!-- Right Form Panel -->
+          <div class="lg:col-span-7 p-8 sm:p-10">
+            <form id="contactForm" class="space-y-5">
+              <div>
+                <label for="name" class="block font-mono text-xs uppercase tracking-wider text-slate-300 mb-2">Name *</label>
+                <input 
+                  type="text" 
+                  id="name" 
+                  name="name" 
+                  required 
+                  placeholder="Enter your full name"
+                  class="w-full rounded-xl bg-void border border-slate-800 px-4 py-3.5 text-white placeholder-slate-500 text-sm focus:border-syntaxCyan focus:ring-2 focus:ring-syntaxCyan/25 outline-none transition"
+                >
+              </div>
+
+              <div>
+                <label for="phone" class="block font-mono text-xs uppercase tracking-wider text-slate-300 mb-2">Phone *</label>
+                <input 
+                  type="tel" 
+                  id="phone" 
+                  name="phone" 
+                  required 
+                  placeholder="Enter your phone number"
+                  class="w-full rounded-xl bg-void border border-slate-800 px-4 py-3.5 text-white placeholder-slate-500 text-sm focus:border-syntaxCyan focus:ring-2 focus:ring-syntaxCyan/25 outline-none transition"
+                >
+              </div>
+
+              <div>
+                <label for="message" class="block font-mono text-xs uppercase tracking-wider text-slate-300 mb-2">Message *</label>
+                <textarea 
+                  id="message" 
+                  name="message" 
+                  rows="4" 
+                  required 
+                  placeholder="Write your query regarding coding, technology, or education news..."
+                  class="w-full rounded-xl bg-void border border-slate-800 px-4 py-3.5 text-white placeholder-slate-500 text-sm focus:border-syntaxCyan focus:ring-2 focus:ring-syntaxCyan/25 outline-none transition resize-y"
+                ></textarea>
+              </div>
+
+              <button type="submit" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-syntaxCyan hover:bg-cyan-400 text-void font-bold text-sm sm:text-base shadow-lg shadow-syntaxCyan/20 transition-all inline-flex items-center justify-center gap-2">
+                <span>Submit Message</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </button>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==================== MULTI-COLUMN DEVELOPER FOOTER ==================== -->
+  <footer id="footer" class="bg-void border-t border-slate-800/90 pt-16 pb-10 text-slate-400">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 pb-12 border-b border-slate-800/80">
+        
+        <!-- Column 1: Quick Links -->
+        <div>
+          <h5 class="font-display font-bold text-white text-base pl-3 border-l-2 border-syntaxCyan mb-5">Quick Links</h5>
+          <ul class="space-y-2.5 text-sm">
+            <li><a href="https://mizanuralrasid.github.io/Mizanuralrasid/" target="_blank" rel="noopener noreferrer" class="hover:text-syntaxCyan transition flex items-center gap-2"><span>&raquo;</span> Home</a></li>
+            <li><a href="#about" class="hover:text-syntaxCyan transition flex items-center gap-2"><span>&raquo;</span> About</a></li>
+            <li><a href="#blogs" class="hover:text-syntaxCyan transition flex items-center gap-2"><span>&raquo;</span> FAQ &amp; Tutorials</a></li>
+            <li><a href="#services" class="hover:text-syntaxCyan transition flex items-center gap-2"><span>&raquo;</span> Get Started</a></li>
+            <li><a href="#blogs" class="hover:text-syntaxCyan transition flex items-center gap-2"><span>&raquo;</span> Coding Guides</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 2: Coding Categories -->
+        <div>
+          <h5 class="font-display font-bold text-white text-base pl-3 border-l-2 border-syntaxEmerald mb-5">Categories</h5>
+          <ul class="space-y-2.5 text-sm">
+            <li><button type="button" onclick="filterByCategory('C / C++', true)" class="hover:text-syntaxEmerald transition flex items-center gap-2"><span>&raquo;</span> C &amp; C++ Programming</button></li>
+            <li><button type="button" onclick="filterByCategory('Web Dev', true)" class="hover:text-syntaxEmerald transition flex items-center gap-2"><span>&raquo;</span> HTML, CSS &amp; Bootstrap</button></li>
+            <li><button type="button" onclick="filterByCategory('DBMS', true)" class="hover:text-syntaxEmerald transition flex items-center gap-2"><span>&raquo;</span> Database Management System</button></li>
+            <li><button type="button" onclick="filterByCategory('Tech News', true)" class="hover:text-syntaxEmerald transition flex items-center gap-2"><span>&raquo;</span> Trending Tech &amp; Education</button></li>
+            <li><a href="#contact" class="hover:text-syntaxEmerald transition flex items-center gap-2"><span>&raquo;</span> Ask a Question</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 3: Imprint & Connect -->
+        <div>
+          <h5 class="font-display font-bold text-white text-base pl-3 border-l-2 border-syntaxViolet mb-5">Imprint &amp; Connect</h5>
+          <p class="text-sm text-slate-400 leading-relaxed mb-4">
+            ColorCode is a dedicated technology, coding, and educational blog curated for students and developers.
+          </p>
+          <ul class="space-y-2.5 text-sm mb-6">
+            <li>
+              <a href="https://techassam2021.blogspot.com/" target="_blank" rel="noopener noreferrer" title="Design and developed by" class="text-syntaxAmber hover:underline flex items-center gap-2">
+                <span>&raquo;</span> Imprint — TechAssam (2021)
+              </a>
+            </li>
+          </ul>
+
+          <!-- Social Icons -->
+          <div class="flex items-center gap-3">
+            <a href="https://www.facebook.com/mizanuralrasid" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="w-9 h-9 rounded-xl bg-surface border border-slate-800 hover:border-syntaxCyan hover:text-syntaxCyan flex items-center justify-center transition">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+            </a>
+            <a href="https://www.twitter.com/mizanuralrasid" target="_blank" rel="noopener noreferrer" aria-label="Twitter" class="w-9 h-9 rounded-xl bg-surface border border-slate-800 hover:border-syntaxCyan hover:text-syntaxCyan flex items-center justify-center transition">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg>
+            </a>
+            <a href="https://www.instagram.com/mizanuralrasid" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="w-9 h-9 rounded-xl bg-surface border border-slate-800 hover:border-syntaxCyan hover:text-syntaxCyan flex items-center justify-center transition">
+              <svg class="w-4 h-4 fill-none stroke-current" stroke-width="2" viewBox="0 0 24 24"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+            <a href="https://techassam2021.blogspot.com/" target="_blank" rel="noopener noreferrer" aria-label="Google / Blog" class="w-9 h-9 rounded-xl bg-surface border border-slate-800 hover:border-syntaxCyan hover:text-syntaxCyan flex items-center justify-center transition font-mono text-xs font-bold">
+              G+
+            </a>
+            <a href="#contact" aria-label="Email Contact" class="w-9 h-9 rounded-xl bg-surface border border-slate-800 hover:border-syntaxCyan hover:text-syntaxCyan flex items-center justify-center transition">
+              <svg class="w-4 h-4 fill-none stroke-current" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Copyright Bar -->
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm text-slate-400">
+        <p>
+          &copy; All Rights Reserved. Designed &amp; Developed by
+          <a href="https://mizanuralrasid.github.io/Mizanuralrasid/" target="_blank" rel="noopener noreferrer" class="text-syntaxCyan hover:underline font-semibold ml-1">
+            Mizanur Alrasid
+          </a>
+        </p>
+        <p class="font-mono text-xs text-slate-500">ColorCode &bull; Built for Learners &amp; Developers</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== BLOG ARTICLE READER MODAL ==================== -->
+  <div id="articleModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-void/85 backdrop-blur-md" role="dialog" aria-modal="true" aria-labelledby="modalArticleTitle">
+    <div class="bg-surface border border-slate-700/90 rounded-3xl max-w-2xl w-full max-h-[88vh] flex flex-col shadow-2xl overflow-hidden">
+      <!-- Modal Header -->
+      <div class="px-6 py-4 bg-elevated/80 border-b border-slate-800 flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <span id="modalArticleBadge" class="font-mono text-xs font-semibold px-2.5 py-1 rounded-md bg-syntaxCyan/15 text-syntaxCyan">Category</span>
+          <span id="modalArticleMeta" class="font-mono text-xs text-slate-400">5 min read</span>
+        </div>
+        <button type="button" onclick="closeArticleModal()" aria-label="Close reader" class="w-8 h-8 rounded-lg bg-void hover:bg-slate-800 text-slate-300 flex items-center justify-center font-bold transition">
+          &times;
+        </button>
+      </div>
+
+      <!-- Modal Scrollable Content -->
+      <div class="p-6 sm:p-8 overflow-y-auto space-y-5">
+        <h3 id="modalArticleTitle" class="font-display font-extrabold text-2xl sm:text-3xl text-white leading-snug">Article Title</h3>
+        <div class="flex items-center gap-3 text-xs text-slate-400 pb-4 border-b border-slate-800">
+          <span>By <strong class="text-slate-200">Mizanur Alrasid</strong></span>
+          <span>&bull;</span>
+          <span>ColorCode Editorial</span>
+        </div>
+        <div id="modalArticleBody" class="space-y-4 text-slate-300 text-sm sm:text-base leading-relaxed"></div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="px-6 py-4 bg-void/80 border-t border-slate-800 flex items-center justify-between">
+        <span class="font-mono text-xs text-slate-500">ColorCode Knowledge Base</span>
+        <button type="button" onclick="closeArticleModal()" class="px-5 py-2 rounded-xl bg-syntaxCyan text-void font-bold text-xs sm:text-sm hover:bg-cyan-400 transition">
+          Done Reading
+        </button>
+      </div>
     </div>
   </div>
 
-<!-- Footer -->
-<section id="footer">
-  <div class="container">
-    <div class="row text-center text-xs-center text-sm-left text-md-left">
-      <div class="col-xs-12 col-sm-4 col-md-4">
-        <h5>Quick links</h5>
-        <ul class="list-unstyled quick-links">
-          <li><a href="#"><i class="fa fa-angle-double-right"></i>Home</a></li>
-          <li><a href="#"><i class="fa fa-angle-double-right"></i>About</a></li>
-          <li><a href="#"><i class="fa fa-angle-double-right"></i>FAQ</a></li>
-          <li><a href="#"><i class="fa fa-angle-double-right"></i>Get Started</a></li>
-          <li><a href="#"><i class="fa fa-angle-double-right"></i>Videos</a></li>
-        </ul>
-      </div>
-      <div class="col-xs-12 col-sm-4 col-md-4">
-        <h5>Quick links</h5>
-        <ul class="list-unstyled quick-links">
-          <li><a href="#"><i class="fa fa-angle-double-right"></i>Home</a></li>
-          <li><a href="#"><i class="fa fa-angle-double-right"></i>About</a></li>
-          <li><a href="#"><i class="fa fa-angle-double-right"></i>FAQ</a></li>
-          <li><a href="#"><i class="fa fa-angle-double-right"></i>Get Started</a></li>
-          <li><a href="#"><i class="fa fa-angle-double-right"></i>Videos</a></li>
-        </ul>
-      </div>
-      <div class="col-xs-12 col-sm-4 col-md-4">
-        <h5>Quick links</h5>
-        <ul class="list-unstyled quick-links">
-          <li><a href="#"><i class="fa fa-angle-double-right"></i>Home</a></li>
-          <li><a href="#"><i class="fa fa-angle-double-right"></i>About</a></li>
-          <li><a href="#"><i class="fa fa-angle-double-right"></i>FAQ</a></li>
-          <li><a href="#"><i class="fa fa-angle-double-right"></i>Get Started</a></li>
-          <li><a href="https://techassam2021.blogspot.com/" title="Design and developed by"><i class="fa fa-angle-double-right"></i>Imprint</a></li>
-        </ul>
-      </div>
+  <!-- ==================== TOAST NOTIFICATION ==================== -->
+  <div id="toastBanner" class="fixed bottom-6 right-6 z-50 hidden max-w-sm w-full bg-surface border border-syntaxEmerald/50 rounded-2xl p-4 shadow-2xl flex items-start gap-3">
+    <div class="w-8 h-8 rounded-lg bg-syntaxEmerald/20 text-syntaxEmerald flex items-center justify-center shrink-0 font-bold">
+      &#10003;
     </div>
-    <div class="row">
-      <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-5">
-        <ul class="list-unstyled list-inline social text-center">
-          <li class="list-inline-item"><a href="https://www.facebook.com/mizanuralrasid"><i class="fa fa-facebook"></i></a></li>
-          <li class="list-inline-item"><a href="https://www.twitter.com/mizanuralrasid"><i class="fa fa-twitter"></i></a></li>
-          <li class="list-inline-item"><a href="https://www.instagram.com/mizanuralrasid"><i class="fa fa-instagram"></i></a></li>
-          <li class="list-inline-item"><a href="#"><i class="fa fa-google-plus"></i></a></li>
-          <li class="list-inline-item"><a href="#" target="_blank"><i class="fa fa-envelope"></i></a></li>
-        </ul>
-      </div>
-      <hr>
-    </div>	
-    <div class="row">
-      <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center text-white">
-
-        <p class="h6">© All right Reversed.<a class="text-danger ml-2" href="https://mizanuralrasid.github.io/Mizanuralrasid/" target="_blank">Mizanur Alrasid</a></p>
-      </div>
-      <hr>
-    </div>	
+    <div class="flex-1">
+      <h4 id="toastHeading" class="font-display font-bold text-sm text-white">Message Sent</h4>
+      <p id="toastBody" class="text-xs text-slate-300 mt-0.5 leading-relaxed">Thanks for contacting ColorCode!</p>
+    </div>
+    <button type="button" onclick="hideToast()" class="text-slate-400 hover:text-white text-lg leading-none">&times;</button>
   </div>
 
+  <!-- ==================== APPLICATION JAVASCRIPT ==================== -->
+  <script>
+    // 1. Curated Blog Dataset matching ColorCode's exact topics (C, C++, HTML, CSS, Bootstrap, DBMS, Tech News)
+    const blogPosts = [
+      {
+        id: 1,
+        title: "Mastering Pointers & Dynamic Memory Allocation in C and C++",
+        category: "C / C++",
+        tagColor: "cyan",
+        readTime: "6 min read",
+        date: "Nov 12, 2026",
+        excerpt: "Understand stack vs. heap memory, pointer arithmetic, and how to prevent memory leaks using smart pointers in modern C++.",
+        codePreview: "int* ptr = new int(42);\nstd::cout << *ptr << std::endl;\ndelete ptr;",
+        content: [
+          "Pointers are one of the most powerful features in C and C++, giving developers direct control over memory addresses and hardware-level performance.",
+          "When allocating memory dynamically on the heap using malloc() in C or the new keyword in C++, always ensure every allocation has a corresponding free() or delete call—or leverage std::unique_ptr in modern C++ to automate resource cleanup.",
+          "Mastering pointer dereferencing and pass-by-reference semantics will dramatically improve your data structures and competitive programming efficiency."
+        ]
+      },
+      {
+        id: 2,
+        title: "Modern CSS Grid & Flexbox: Building Responsive Layouts Without Bloat",
+        category: "Web Dev",
+        tagColor: "emerald",
+        readTime: "5 min read",
+        date: "Nov 09, 2026",
+        excerpt: "Learn when to choose CSS Grid over Flexbox to craft fluid, mobile-first web designs with clean HTML5 and CSS3 architecture.",
+        codePreview: ".grid-layout {\n  display: grid;\n  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));\n}",
+        content: [
+          "Modern CSS has revolutionized web design. While Flexbox excels at one-dimensional row or column alignment, CSS Grid gives you complete two-dimensional control over complex page layouts.",
+          "Combining semantic HTML5 tags (<header>, <main>, <article>, <footer>) with responsive CSS Grid rules ensures your website adapts seamlessly across mobile phones, tablets, and wide desktop monitors.",
+          "Always test your breakpoints with fluid units like rem, %, and clamp() rather than rigid fixed pixel widths."
+        ]
+      },
+      {
+        id: 3,
+        title: "Database Management Systems (DBMS): Normalization from 1NF to 3NF",
+        category: "DBMS",
+        tagColor: "violet",
+        readTime: "7 min read",
+        date: "Nov 05, 2026",
+        excerpt: "Eliminate data redundancy and update anomalies in relational databases with practical SQL schema examples and ER modeling.",
+        codePreview: "CREATE TABLE Students (\n  student_id INT PRIMARY KEY,\n  full_name VARCHAR(100) NOT NULL\n);",
+        content: [
+          "A well-structured Database Management System (DBMS) is the backbone of every scalable software application. Poorly designed tables lead to duplicate records and insertion/deletion anomalies.",
+          "First Normal Form (1NF) ensures atomic column values. Second Normal Form (2NF) removes partial dependencies on composite primary keys, and Third Normal Form (3NF) eliminates transitive dependencies.",
+          "Applying proper primary keys, foreign key constraints, and B-Tree indexes keeps your SQL queries fast even as your dataset grows into millions of rows."
+        ]
+      },
+      {
+        id: 4,
+        title: "Bootstrap 5 Utility Classes & Responsive Grid Essentials for Beginners",
+        category: "Web Dev",
+        tagColor: "amber",
+        readTime: "4 min read",
+        date: "Oct 30, 2026",
+        excerpt: "Accelerate front-end prototyping using Bootstrap's 12-column responsive grid, navbar components, and spacing utilities.",
+        codePreview: "<div class=\"container\">\n  <div class=\"row g-4\">\n    <div class=\"col-md-6\">Column 1</div>\n  </div>\n</div>",
+        content: [
+          "Bootstrap remains one of the fastest ways for students and developers to build structured, mobile-responsive web pages out of the box.",
+          "By mastering core container classes, responsive breakpoints (sm, md, lg, xl), and spacing helpers like py-5 and gap-3, you can assemble clean dashboards and blog layouts in minutes.",
+          "Pair Bootstrap components with custom CSS variables to give your site a distinct, memorable visual identity."
+        ]
+      },
+      {
+        id: 5,
+        title: "Top Computer Science & Coding Education Trends for Students in 2026",
+        category: "Tech News",
+        tagColor: "cyan",
+        readTime: "5 min read",
+        date: "Oct 24, 2026",
+        excerpt: "From AI-assisted code review to open-source portfolios, discover the essential skills shaping tech education and careers today.",
+        codePreview: "// Build projects, share knowledge,\n// and contribute to open source daily.",
+        content: [
+          "Technology education is shifting rapidly from rote memorization to hands-on project building and algorithmic problem solving.",
+          "Students who master foundational languages like C and C++ alongside web technologies (HTML, CSS, JavaScript) and SQL databases gain a versatile full-stack mindset.",
+          "Documenting your learning journey through technical blogging and GitHub repositories is one of the strongest ways to stand out in technical interviews."
+        ]
+      },
+      {
+        id: 6,
+        title: "Standard Template Library (STL) in C++: Vectors, Maps & Algorithms",
+        category: "C / C++",
+        tagColor: "emerald",
+        readTime: "6 min read",
+        date: "Oct 18, 2026",
+        excerpt: "Write cleaner, faster C++ programs by leveraging std::vector, std::unordered_map, and built-in sorting and searching routines.",
+        codePreview: "std::vector<int> nums = {5, 2, 9, 1};\nstd::sort(nums.begin(), nums.end());",
+        content: [
+          "The C++ Standard Template Library (STL) provides battle-tested containers and algorithms that save hundreds of lines of boilerplate code.",
+          "Use std::vector for dynamic contiguous arrays, std::unordered_map for O(1) average-time hash lookups, and std::sort for O(N log N) introspective sorting.",
+          "Understanding time and space complexity for each STL container allows you to choose the optimal data structure for every engineering problem."
+        ]
+      }
+    ];
+
+    // IDE Code Snippets for Interactive Hero Card
+    const ideSnippets = {
+      cpp: {
+        status: "GCC 14.2 • C++20 Ready",
+        raw: `#include <iostream>\nusing namespace std;\n\n// ColorCode Daily Knowledge Engine\nint main() {\n    string topics[] = {"C/C++", "HTML/CSS", "DBMS"};\n    for (const auto& topic : topics) {\n        cout << "Learning: " << topic << endl;\n    }\n    return 0;\n}`,
+        html: `<code><span class="text-syntaxViolet">#include</span> <span class="text-syntaxEmerald">&lt;iostream&gt;</span>
+<span class="text-syntaxViolet">using namespace</span> std;
+
+<span class="text-slate-500">// ColorCode Daily Knowledge Engine</span>
+<span class="text-syntaxCyan">int</span> <span class="text-amber-300">main</span>() {
+    string topics[] = {<span class="text-syntaxEmerald">"C/C++"</span>, <span class="text-syntaxEmerald">"HTML/CSS"</span>, <span class="text-syntaxEmerald">"DBMS"</span>};
+    <span class="text-syntaxViolet">for</span> (<span class="text-syntaxCyan">const auto</span>&amp; topic : topics) {
+        cout &lt;&lt; <span class="text-syntaxEmerald">"Learning: "</span> &lt;&lt; topic &lt;&lt; endl;
+    }
+    <span class="text-syntaxViolet">return</span> <span class="text-syntaxAmber">0</span>;
+}</code>`
+      },
+      web: {
+        status: "HTML5 + CSS3 • Responsive",
+        raw: `<!DOCTYPE html>\n<html lang="en">\n<body>\n  <article class="colorcode-post">\n    <h1>Welcome to ColorCode</h1>\n    <p>Learn HTML, CSS & Bootstrap</p>\n  </article>\n</body>\n</html>`,
+        html: `<code><span class="text-slate-500">&lt;!DOCTYPE html&gt;</span>
+<span class="text-syntaxCyan">&lt;html</span> <span class="text-syntaxAmber">lang</span>=<span class="text-syntaxEmerald">"en"</span><span class="text-syntaxCyan">&gt;</span>
+<span class="text-syntaxCyan">&lt;body&gt;</span>
+  <span class="text-syntaxCyan">&lt;article</span> <span class="text-syntaxAmber">class</span>=<span class="text-syntaxEmerald">"colorcode-post"</span><span class="text-syntaxCyan">&gt;</span>
+    <span class="text-syntaxCyan">&lt;h1&gt;</span>Welcome to ColorCode<span class="text-syntaxCyan">&lt;/h1&gt;</span>
+    <span class="text-syntaxCyan">&lt;p&gt;</span>Learn HTML, CSS &amp; Bootstrap<span class="text-syntaxCyan">&lt;/p&gt;</span>
+  <span class="text-syntaxCyan">&lt;/article&gt;</span>
+<span class="text-syntaxCyan">&lt;/body&gt;</span>
+<span class="text-syntaxCyan">&lt;/html&gt;</span></code>`
+      },
+      sql: {
+        status: "PostgreSQL / MySQL • 3NF",
+        raw: `SELECT article_title, category\nFROM colorcode_blogs\nWHERE category IN ('C++', 'DBMS')\nORDER BY published_date DESC\nLIMIT 6;`,
+        html: `<code><span class="text-syntaxViolet">SELECT</span> article_title, category
+<span class="text-syntaxViolet">FROM</span> colorcode_blogs
+<span class="text-syntaxViolet">WHERE</span> category <span class="text-syntaxViolet">IN</span> (<span class="text-syntaxEmerald">'C++'</span>, <span class="text-syntaxEmerald">'DBMS'</span>)
+<span class="text-syntaxViolet">ORDER BY</span> published_date <span class="text-syntaxCyan">DESC</span>
+<span class="text-syntaxViolet">LIMIT</span> <span class="text-syntaxAmber">6</span>;</code>`
+      }
+    };
+
+    let activeSnippetKey = 'cpp';
+    let currentCategory = 'All';
+    let currentSearchQuery = '';
+    let currentPage = 1;
+    const postsPerPage = 3;
+
+    // Switch Hero IDE Tabs
+    function switchCodeTab(key) {
+      activeSnippetKey = key;
+      document.getElementById('ideCodeContent').innerHTML = ideSnippets[key].html;
+      document.getElementById('ideStatusLabel').innerHTML = `<span class="w-2 h-2 rounded-full bg-syntaxEmerald"></span> ${ideSnippets[key].status}`;
+
+      document.querySelectorAll('.code-tab').forEach(btn => {
+        btn.classList.remove('bg-void', 'text-syntaxCyan', 'border', 'border-slate-700', 'font-semibold');
+        btn.classList.add('text-slate-400');
+      });
+      const activeBtn = document.getElementById(`tab-${key}`);
+      activeBtn.classList.add('bg-void', 'text-syntaxCyan', 'border', 'border-slate-700', 'font-semibold');
+      activeBtn.classList.remove('text-slate-400');
+    }
+
+    // Copy IDE Snippet using fallback-safe execCommand
+    function copyCurrentSnippet() {
+      const text = ideSnippets[activeSnippetKey].raw;
+      const tempArea = document.createElement('textarea');
+      tempArea.value = text;
+      document.body.appendChild(tempArea);
+      tempArea.select();
+      try {
+        document.execCommand('copy');
+        const btn = document.getElementById('copySnippetBtn');
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.textContent = 'Copy snippet'; }, 2000);
+      } catch (err) {
+        console.error('Copy failed', err);
+      }
+      document.body.removeChild(tempArea);
+    }
+
+    // Filter & Render Blog Grid + Pagination
+    function renderBlogs() {
+      const grid = document.getElementById('blogCardsGrid');
+      const emptyState = document.getElementById('emptyBlogState');
+      const filterNotice = document.getElementById('activeFilterNotice');
+      const resultCount = document.getElementById('resultCount');
+      const paginationControls = document.getElementById('paginationControls');
+      const paginationInfo = document.getElementById('paginationInfo');
+
+      const filtered = blogPosts.filter(post => {
+        const matchesCat = currentCategory === 'All' || post.category === currentCategory;
+        const q = currentSearchQuery.toLowerCase();
+        const matchesSearch = !q ||
+          post.title.toLowerCase().includes(q) ||
+          post.excerpt.toLowerCase().includes(q) ||
+          post.category.toLowerCase().includes(q) ||
+          post.codePreview.toLowerCase().includes(q);
+        return matchesCat && matchesSearch;
+      });
+
+      // Update Filter Notice
+      if (currentCategory !== 'All' || currentSearchQuery.trim() !== '') {
+        filterNotice.classList.remove('hidden');
+        resultCount.textContent = filtered.length;
+      } else {
+        filterNotice.classList.add('hidden');
+      }
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '';
+        emptyState.classList.remove('hidden');
+        paginationControls.innerHTML = '';
+        paginationInfo.textContent = '0 articles found';
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+
+      const totalPages = Math.ceil(filtered.length / postsPerPage);
+      if (currentPage > totalPages) currentPage = 1;
+
+      const startIndex = (currentPage - 1) * postsPerPage;
+      const paginatedPosts = filtered.slice(startIndex, startIndex + postsPerPage);
+
+      const badgeStyles = {
+        cyan: 'bg-syntaxCyan/15 text-syntaxCyan border-syntaxCyan/30',
+        emerald: 'bg-syntaxEmerald/15 text-syntaxEmerald border-syntaxEmerald/30',
+        violet: 'bg-syntaxViolet/15 text-syntaxViolet border-syntaxViolet/30',
+        amber: 'bg-syntaxAmber/15 text-syntaxAmber border-syntaxAmber/30'
+      };
+
+      grid.innerHTML = paginatedPosts.map(post => `
+        <article class="group rounded-2xl bg-surface border border-slate-800 hover:border-slate-700 overflow-hidden flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 shadow-lg">
+          <div>
+            <!-- Bespoke Code Thumbnail Header -->
+            <div class="relative h-44 bg-gradient-to-br from-elevated via-void to-surface p-5 border-b border-slate-800 flex flex-col justify-between overflow-hidden">
+              <div class="flex items-center justify-between z-10">
+                <span class="font-mono text-[11px] font-semibold px-2.5 py-1 rounded-md border ${badgeStyles[post.tagColor] || badgeStyles.cyan}">
+                  ${post.category}
+                </span>
+                <span class="font-mono text-[11px] text-slate-400">${post.readTime}</span>
+              </div>
+              <pre class="font-mono text-[11px] text-slate-300/90 bg-void/80 border border-slate-800/90 rounded-xl p-3 overflow-hidden leading-relaxed z-10"><code>${escapeHtml(post.codePreview)}</code></pre>
+            </div>
+
+            <!-- Card Content -->
+            <div class="p-6">
+              <div class="text-xs font-mono text-slate-500 mb-2">${post.date}</div>
+              <h3 class="font-display font-bold text-xl text-white group-hover:text-syntaxCyan transition-colors leading-snug mb-3">
+                ${post.title}
+              </h3>
+              <p class="text-sm text-slate-400 leading-relaxed">
+                ${post.excerpt}
+              </p>
+            </div>
+          </div>
+
+          <!-- Card Footer -->
+          <div class="px-6 pb-6 pt-2 flex items-center justify-between">
+            <button type="button" onclick="openArticleModal(${post.id})" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-elevated hover:bg-syntaxCyan text-slate-100 hover:text-void font-semibold text-xs sm:text-sm transition-all">
+              <span>Read more</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </button>
+            <span class="font-mono text-[11px] text-slate-500">#ColorCode</span>
+          </div>
+        </article>
+      `).join('');
+
+      // Render Pagination Buttons
+      paginationInfo.textContent = `Page ${currentPage} of ${totalPages} (${filtered.length} articles)`;
+      let pageButtonsHtml = `
+        <li>
+          <button type="button" onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''} class="px-3.5 py-2 rounded-xl font-mono text-xs bg-surface border border-slate-800 text-slate-300 hover:border-syntaxCyan disabled:opacity-40 disabled:pointer-events-none transition">
+            Previous
+          </button>
+        </li>
+      `;
+
+      for (let i = 1; i <= totalPages; i++) {
+        const isActive = i === currentPage;
+        pageButtonsHtml += `
+          <li>
+            <button type="button" onclick="changePage(${i})" class="w-9 h-9 rounded-xl font-mono text-xs font-bold transition ${isActive ? 'bg-syntaxCyan text-void' : 'bg-surface border border-slate-800 text-slate-300 hover:border-slate-600'}">
+              ${i}
+            </button>
+          </li>
+        `;
+      }
+
+      pageButtonsHtml += `
+        <li>
+          <button type="button" onclick="changePage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''} class="px-3.5 py-2 rounded-xl font-mono text-xs bg-surface border border-slate-800 text-slate-300 hover:border-syntaxCyan disabled:opacity-40 disabled:pointer-events-none transition">
+            Next
+          </button>
+        </li>
+      `;
+      paginationControls.innerHTML = pageButtonsHtml;
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    function filterByCategory(category, shouldScroll = false) {
+      currentCategory = category;
+      currentPage = 1;
+
+      document.querySelectorAll('.cat-pill').forEach(pill => {
+        if (pill.getAttribute('data-cat') === category) {
+          pill.className = 'cat-pill px-4 py-2 rounded-xl font-mono text-xs font-semibold bg-syntaxCyan text-void transition';
+        } else {
+          pill.className = 'cat-pill px-4 py-2 rounded-xl font-mono text-xs font-semibold bg-surface text-slate-300 border border-slate-800 hover:border-slate-700 transition';
+        }
+      });
+
+      renderBlogs();
+      if (shouldScroll) {
+        document.getElementById('blogs').scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    function changePage(pageNum) {
+      currentPage = pageNum;
+      renderBlogs();
+      document.getElementById('blogs').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function resetFilters() {
+      currentCategory = 'All';
+      currentSearchQuery = '';
+      currentPage = 1;
+      document.getElementById('desktopSearchInput').value = '';
+      document.getElementById('mobileSearchInput').value = '';
+      filterByCategory('All');
+    }
+
+    function selectServiceTopic(topic) {
+      const dropdownMenu = document.getElementById('servicesDropdownMenu');
+      dropdownMenu.classList.remove('open');
+    }
+
+    // Article Reader Modal
+    function openArticleModal(postId) {
+      const post = blogPosts.find(p => p.id === postId);
+      if (!post) return;
+
+      document.getElementById('modalArticleBadge').textContent = post.category;
+      document.getElementById('modalArticleMeta').textContent = `${post.date} • ${post.readTime}`;
+      document.getElementById('modalArticleTitle').textContent = post.title;
+
+      const bodyHtml = `
+        <pre class="font-mono text-xs text-syntaxCyan bg-void border border-slate-800 rounded-xl p-4 overflow-x-auto"><code>${escapeHtml(post.codePreview)}</code></pre>
+        ${post.content.map(p => `<p>${p}</p>`).join('')}
+      `;
+      document.getElementById('modalArticleBody').innerHTML = bodyHtml;
+
+      const modal = document.getElementById('articleModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeArticleModal() {
+      const modal = document.getElementById('articleModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    // Toast Controls
+    let toastTimer;
+    function showToast(title, msg) {
+      document.getElementById('toastHeading').textContent = title;
+      document.getElementById('toastBody').textContent = msg;
+      const toast = document.getElementById('toastBanner');
+      toast.classList.remove('hidden');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(hideToast, 5500);
+    }
+
+    function hideToast() {
+      document.getElementById('toastBanner').classList.add('hidden');
+    }
+
+    // Initialize Interactive Listeners
+    document.addEventListener('DOMContentLoaded', () => {
+      renderBlogs();
+
+      // Mobile Navigation Toggle
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      const mobileMenuDrawer = document.getElementById('mobileMenuDrawer');
+      const iconOpen = document.getElementById('menuIconOpen');
+      const iconClose = document.getElementById('menuIconClose');
+
+      mobileMenuBtn.addEventListener('click', () => {
+        const isHidden = mobileMenuDrawer.classList.contains('hidden');
+        mobileMenuDrawer.classList.toggle('hidden');
+        iconOpen.classList.toggle('hidden', isHidden);
+        iconClose.classList.toggle('hidden', !isHidden);
+        mobileMenuBtn.setAttribute('aria-expanded', String(isHidden));
+      });
+
+      document.querySelectorAll('.mobile-link').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenuDrawer.classList.add('hidden');
+          iconOpen.classList.remove('hidden');
+          iconClose.classList.add('hidden');
+        });
+      });
+
+      // Desktop & Mobile Live Search
+      const desktopSearchInput = document.getElementById('desktopSearchInput');
+      const mobileSearchInput = document.getElementById('mobileSearchInput');
+
+      function handleSearchInput(val, scrollToResults = false) {
+        currentSearchQuery = val;
+        currentPage = 1;
+        if (desktopSearchInput.value !== val) desktopSearchInput.value = val;
+        if (mobileSearchInput.value !== val) mobileSearchInput.value = val;
+        renderBlogs();
+        if (scrollToResults) {
+          document.getElementById('blogs').scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+
+      desktopSearchInput.addEventListener('input', (e) => handleSearchInput(e.target.value, false));
+      mobileSearchInput.addEventListener('input', (e) => handleSearchInput(e.target.value, false));
+
+      document.getElementById('desktopSearchForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        handleSearchInput(desktopSearchInput.value, true);
+      });
+
+      document.getElementById('mobileSearchForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        mobileMenuDrawer.classList.add('hidden');
+        iconOpen.classList.remove('hidden');
+        iconClose.classList.add('hidden');
+        handleSearchInput(mobileSearchInput.value, true);
+      });
+
+      // Contact Form Submission
+      document.getElementById('contactForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const userName = document.getElementById('name').value.trim() || 'Reader';
+        showToast(`Thank you, ${userName}!`, 'Your message has been received by ColorCode. We will respond shortly.');
+        e.target.reset();
+      });
+
+      // Close modal on backdrop click or Escape key
+      const articleModal = document.getElementById('articleModal');
+      articleModal.addEventListener('click', (e) => {
+        if (e.target === articleModal) closeArticleModal();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !articleModal.classList.contains('hidden')) {
+          closeArticleModal();
+        }
+      });
+    });
+  </script>
 </body>
 
 </html>
